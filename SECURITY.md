@@ -20,6 +20,14 @@ PyOS es un proyecto experimental y educativo. Hay límites conocidos que **no** 
 vulnerabilidades nuevas porque están documentados en `docs/LIMITATIONS.md` (en el `.zip` de cada Release):
 no hay usuarios ni permisos, todo se ejecuta como un único usuario, y la red no tiene TLS.
 
+Tampoco lo son, de momento, estos límites conocidos:
+
+- **Sin cuotas de recursos por proceso.** Los objetos de un programa de la PVM son objetos del
+  intérprete anfitrión: un programa que llene la memoria la agota para todo el sistema, y una
+  sola operación enorme (`10 ** 10 ** 8`) bloquea el planificador mientras dura.
+- **Las aplicaciones de LOOK** (`/usr/share/look/apps`) se ejecutan dentro del proceso de LOOK,
+  con sus mismos permisos: instala solo las que conozcas.
+
 Sí son vulnerabilidades, por ejemplo: que un programa de usuario escape del aislamiento de la
 PVM y ejecute Python del anfitrión, que lea o escriba memoria del kernel, o que un paquete de
 red malformado haga caer el kernel.

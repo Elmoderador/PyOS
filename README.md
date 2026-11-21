@@ -1,6 +1,6 @@
 # PyOS — Python Operating System
 
-**Versión 1.0.0** · Licencia [Apache-2.0](LICENSE) · Versionado [U.P.S.](CHANGELOG.md) (Update.Patch.Security)
+**Versión 1.0.1** · Licencia [Apache-2.0](LICENSE) · Versionado [U.P.S.](CHANGELOG.md) (Update.Patch.Security)
 
 Sistema operativo con el kernel escrito **íntegramente en Python** que arranca en una
 máquina virtual **sin Linux ni ningún otro sistema operativo debajo**: solo el

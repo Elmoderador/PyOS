@@ -27,6 +27,46 @@ Las versiones se etiquetan en Git como `vU.P.S` y cada una tiene su Release con 
 
 ---
 
+## 1.0.1 — 2026-11-21 · Security
+
+Solo arreglos de seguridad, encontrados en una auditoría con fuzzers (red, syscalls, interfaz)
+y revisión manual. Sin funciones nuevas; `LOOK_API` sigue en 1 y ninguna syscall cambia de
+significado (se añaden constantes de errno a libpy).
+
+### Red (remoto)
+- **Cuelgue del kernel con un SYN.** Un MSS de 0 en las opciones TCP dejaba el bucle de envío
+  troceando en segmentos de 0 bytes para siempre. Ahora el MSS se acota a [88, 1460].
+- **Caída del kernel con DHCP.** La opción 53 vacía lanzaba `IndexError` durante el arranque;
+  un servidor DHCP falso en la red local bastaba. Las opciones de direcciones más cortas de
+  4 bytes se descartan y la concesión exige 4 bytes.
+- TCP con *data offset* imposible (menor que 20 o mayor que el segmento) se descarta.
+- DNS: un registro A truncado ya no entra en el resultado como una dirección de 2 bytes.
+- **Defensa en profundidad:** una trama que haga fallar a la pila se descarta y se registra, y
+  un fallo en el manejador de cualquier IRQ se registra sin tumbar el kernel (`KernelPanic`
+  sigue deteniéndolo).
+
+### PVM (aislamiento)
+- **Lectura de memoria del anfitrión con `str.format`.** `'{0.__class__.__init__.__globals__}'`
+  recorría atributos en C sin pasar por el filtro de la PVM. Ahora `str.format` usa un
+  formateador que valida cada atributo, incluidos los campos anidados.
+
+### Servicios
+- `httpd`: XSS reflejado en la página 404 (la ruta se escapa); rutas sin `/` inicial leían
+  ficheros hermanos de `/var/www`; plazos de 10 s para recibir la petición y 20 s para enviarla
+  (antes, un cliente callado bloqueaba el servidor para siempre).
+- `pkg`: el nombre del paquete se usaba como ruta (`../../sbin/init.py` sobrescribía ficheros
+  protegidos); un paquete ya no puede pisar ficheros que no sean suyos (como dpkg), ni tocar
+  `/var/pkg/`, `/boot/`, `/proc/` o `/dev/`; tamaños negativos (bucle infinito) y
+  dependencias con nombres no válidos se rechazan.
+- `klog`: el texto se sanea (sin control, ESC ni sustitutos sueltos); un sustituto suelto
+  dejaba `dmesg` roto para todos y ESC permitía secuencias ANSI y líneas falsas.
+
+### Otros
+- El banner de `/etc/motd` aún decía "PyOS 2.1"; ya no lleva número de versión.
+- Nuevos: `tests/netfuzz.py`, `tests/sysfuzz.py`, `tests/test_netsec.py`, `tests/test_sec.py`.
+
+---
+
 ## 1.0.0 — 2026-11-21
 
 Primera versión pública. Reúne todo el trabajo anterior a la publicación (las numeraciones
