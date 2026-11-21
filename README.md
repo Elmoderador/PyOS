@@ -2,32 +2,6 @@
 
 **Versión 1.0.0** · Licencia [Apache-2.0](LICENSE) · Versionado [U.P.S.](CHANGELOG.md) (Update.Patch.Security)
 
-> ### 🧪 DEV NOTE
->
-> PyOS nació de una pregunta aparentemente sencilla:\
-> **«¿Y si hacemos un sistema operativo en Python?»**
->
-> La respuesta técnica fue complicada. La respuesta sensata era no.\
-> Elegimos la primera.
->
-> Aquí no encontrarás un kernel convencional, ni una arquitectura especialmente recomendable,
-> ni decisiones que puedas defender fácilmente delante de un ingeniero de sistemas.
->
-> Encontrarás Python, firmware UEFI, LOOK y una cantidad preocupante de optimizaciones para
-> conseguir que todo funcione.
->
-> Hemos reducido llamadas al firmware, eliminado procesos zombi y perseguido repintados
-> innecesarios como si nos debieran dinero.
->
-> No prometemos ser más rápidos que Linux.\
-> No pretendemos sustituir Windows.\
-> No estamos intentando reinventar la informática.
->
-> Solo queríamos demostrar que podíamos hacerlo.\
-> Y ahora tenemos un sistema operativo.
->
-> **Bienvenido a PyOS.**
-
 Sistema operativo con el kernel escrito **íntegramente en Python** que arranca en una
 máquina virtual **sin Linux ni ningún otro sistema operativo debajo**: solo el
 firmware UEFI de la máquina.
