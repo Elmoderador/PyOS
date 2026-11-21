@@ -1,0 +1,14 @@
+# compilados e imágenes (las imágenes de disco van en las Releases, no en el repo)
+build/
+*.img
+*.vdi
+*.vhdx
+*.vmdk
+*.iso
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+# salidas de los tests
+tests/out/

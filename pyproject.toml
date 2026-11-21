@@ -1,0 +1,22 @@
+[project]
+name = "pyos"
+version = "1.0.0"
+license = {text = "Apache-2.0"}
+description = "PyOS: kernel de sistema operativo escrito íntegramente en Python"
+requires-python = ">=3.6"
+dependencies = []
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[project.scripts]
+pyos = "pyos.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["pyos*"]
+
+[tool.setuptools.package-data]
+"pyos.userland" = ["**/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,4 @@
+name: juegos
+version: 1.0.0
+description: juegos de terminal: adivina, tresenraya
+depends: extras

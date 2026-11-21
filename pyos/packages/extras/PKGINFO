@@ -1,0 +1,4 @@
+name: extras
+version: 1.0.0
+description: utilidades extra: tree sort uniq tail find
+depends:

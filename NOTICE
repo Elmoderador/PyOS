@@ -1,0 +1,24 @@
+PyOS
+Copyright 2026 Elmo505050 (SpectroDinner)
+
+Este producto incluye software desarrollado por terceros:
+
+1. Fuente de consola 8x19 (pyos/kernel/drivers/font8x19.py), generada a partir de
+   MdeModulePkg/Universal/Console/GraphicsConsoleDxe/LaffStd.c de edk2.
+   Copyright (c) 2006-2008 Intel Corporation. Licencia BSD-2-Clause-Patent
+   (licenses/edk2-BSD-2-Clause-Patent.txt).
+
+Las imágenes de disco que se publican como Releases (pyos-*.img, .vdi, .vhdx, .vmdk)
+contienen además, sin modificar, estos binarios compilados desde sus fuentes oficiales:
+
+2. UEFI Shell (\EFI\BOOT\BOOTX64.EFI), de edk2 (https://github.com/tianocore/edk2),
+   commit 6951dfe7d59d144a3a980bd7eda699db2d8554ac. TianoCore and contributors.
+   Licencia BSD-2-Clause-Patent (licenses/edk2-BSD-2-Clause-Patent.txt).
+
+3. CPython 3.6.8 para UEFI (\EFI\Tools\Python.efi y \EFI\StdLib), de edk2-libc
+   (https://github.com/tianocore/edk2-libc), commit 73056078b60c9378af08dd122a29913e25e84e1c.
+   CPython: Copyright (c) 2001-2018 Python Software Foundation, licencia PSF-2.0
+   (licenses/CPython-3.6.8-PSF.txt). Adaptación UEFI: TianoCore and contributors,
+   licencia BSD-2-Clause-Patent (licenses/edk2-libc-BSD-2-Clause-Patent.txt).
+
+Dentro de cada imagen estas licencias están en \LICENSES.
