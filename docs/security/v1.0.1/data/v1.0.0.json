@@ -1,0 +1,98 @@
+{
+ "dhcp_direcciones_cortas": {
+  "ok": false,
+  "resultado": "excepción: TypeError: not enough arguments for format string",
+  "segundos": 0.0
+ },
+ "dhcp_opcion_vacia": {
+  "ok": false,
+  "resultado": "excepción en el arranque: IndexError: index out of range",
+  "segundos": 0.0
+ },
+ "dns_truncado": {
+  "ok": false,
+  "resultado": "devuelve una IP de 2 bytes",
+  "segundos": 0.0
+ },
+ "fuzz_red": {
+  "ok": true,
+  "resultado": "0 fallos distintos en 20 000 tramas",
+  "por_semilla": {
+   "1": 0,
+   "2": 0,
+   "3": 0,
+   "4": 0,
+   "5": 0
+  },
+  "distintos": 0,
+  "tipos": [],
+  "segundos": 0.3
+ },
+ "httpd": {
+  "ok": false,
+  "xss": true,
+  "atacante_s": 30.0,
+  "espera_s": 29.5,
+  "servida": true,
+  "resultado": "XSS reflejado; petición legítima esperó 29.5 s con un atacante de 30 s",
+  "segundos": 30.9
+ },
+ "irq_driver_roto": {
+  "ok": false,
+  "resultado": "la excepción sube hasta el kernel: IndexError: driver roto",
+  "segundos": 0.0
+ },
+ "klog": {
+  "ok": false,
+  "resultado": "dmesg roto",
+  "segundos": 0.3
+ },
+ "mss_cero": {
+  "ok": false,
+  "resultado": "kernel colgado (>10 s enviando 5 KB)",
+  "ms": 10000,
+  "segundos": 10.1
+ },
+ "pkg": {
+  "ok": false,
+  "ataques": 4,
+  "exitosos": 4,
+  "resultado": "/sbin/svc.py sustituido por un troyano; registro de LOOK falsificado; nombre con ../ aceptado; dependencia con ../ aceptada",
+  "legitimo": true,
+  "segundos": 0.3
+ },
+ "pkg_tamano_negativo": {
+  "ok": false,
+  "resultado": "pkg en bucle infinito: la consola no vuelve (apagado forzado a los 40 s)",
+  "s": 40.1,
+  "segundos": 40.3
+ },
+ "str_format": {
+  "ok": false,
+  "fugas": 4,
+  "de": 6,
+  "resultado": "4 de 6 cargas leen objetos del anfitrión",
+  "ejemplo": "{'__name__': 'pyos.kernel.cpu.vm', '__doc__': 'PVM: la CPU v",
+  "segundos": 0.1
+ },
+ "sysfuzz": {
+  "ok": false,
+  "syscalls": 70,
+  "superadas": 70,
+  "oops": 1,
+  "fin": true,
+  "dmesg_roto": true,
+  "resultado": "kernel en pie tras 70/70 syscalls; pero dmesg queda roto",
+  "segundos": 1.2
+ },
+ "tcp_offset": {
+  "ok": false,
+  "resultado": "excepción: error: unpack requires a buffer of 2 bytes",
+  "segundos": 0.0
+ },
+ "trama_que_rompe_la_pila": {
+  "ok": false,
+  "resultado": "la excepción sube hasta el kernel: error: cabecera imposible",
+  "segundos": 0.0
+ }
+}

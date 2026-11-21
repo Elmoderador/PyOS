@@ -1,0 +1,32 @@
+[
+ [
+  "x = '{0.__class__}'.format(1)",
+  true,
+  "<class 'int'>"
+ ],
+ [
+  "x = '{0.__class__.__init__.__globals__}'.format(syscall)",
+  true,
+  "{'__name__': 'pyos.kernel.cpu.vm', '__doc__': 'PVM: la CPU virtual de "
+ ],
+ [
+  "x = str.format('{0.__class__}', 1)",
+  true,
+  "<class 'int'>"
+ ],
+ [
+  "x = '{0:{1.__class__}}'.format(1, 2)",
+  false,
+  ""
+ ],
+ [
+  "f = 'a{0.__class__}'.format\nx = f(1)",
+  true,
+  "a<class 'int'>"
+ ],
+ [
+  "x = '{0.gate}'.format(lambda: 0)",
+  false,
+  ""
+ ]
+]

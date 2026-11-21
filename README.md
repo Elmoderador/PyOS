@@ -142,5 +142,6 @@ Limitaciones, decisiones y alternativas: `docs/LIMITATIONS.md` (en el `.zip` de 
 - [CHANGELOG.md](CHANGELOG.md): qué cambia en cada versión y la política de versionado U.P.S.
 - `CONTRIBUTING.md` (en el `.zip` de la Release): cómo contribuir (y la regla de oro: todo en Python).
 - [SECURITY.md](SECURITY.md): cómo informar de una vulnerabilidad.
+- [docs/](docs/): informes de seguridad de cada versión, con el antes y el después medidos.
 - Licencia: [Apache-2.0](LICENSE). Componentes de terceros y sus licencias: [NOTICE](NOTICE) y
   [`licenses/`](licenses).

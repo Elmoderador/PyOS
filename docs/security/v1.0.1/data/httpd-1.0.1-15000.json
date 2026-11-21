@@ -1,0 +1,1 @@
+{"ok": true, "xss": false, "atacante_s": 15.0, "espera_s": 9.5, "servida": true, "resultado": "XSS escapado; petición legítima esperó 9.5 s con un atacante de 15 s"}
