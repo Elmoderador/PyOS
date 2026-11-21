@@ -1,4 +1,0 @@
-name: look
-version: 1.0.0
-description: PyOS LOOK, entorno gráfico: escritorio, ventanas, terminal, archivos, navegador, Paint, visor de imágenes, calculadora
-depends:

@@ -1,4 +1,0 @@
-name: arcade
-version: 1.0.0
-description: juegos 2D a pantalla completa: snake tetris pong breakout invaders 2048 minas
-depends:

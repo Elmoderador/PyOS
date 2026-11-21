@@ -1,4 +1,0 @@
-name: httpd
-exec: /sbin/httpd.py
-args: 80
-description: servidor web (sirve /var/www; /estado)

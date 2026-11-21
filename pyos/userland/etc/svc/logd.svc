@@ -1,3 +1,0 @@
-name: logd
-exec: /sbin/logd.py
-description: vuelca el log del kernel (dmesg) a /var/log/kernel.log

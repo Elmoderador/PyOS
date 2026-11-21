@@ -17,7 +17,7 @@ repositorio (GitHub Private Vulnerability Reporting). Incluye:
 ## Alcance
 
 PyOS es un proyecto experimental y educativo. Hay límites conocidos que **no** son
-vulnerabilidades nuevas porque están documentados en [docs/LIMITATIONS.md](docs/LIMITATIONS.md):
+vulnerabilidades nuevas porque están documentados en `docs/LIMITATIONS.md` (en el `.zip` de cada Release):
 no hay usuarios ni permisos, todo se ejecuta como un único usuario, y la red no tiene TLS.
 
 Sí son vulnerabilidades, por ejemplo: que un programa de usuario escape del aislamiento de la

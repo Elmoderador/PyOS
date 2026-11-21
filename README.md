@@ -14,7 +14,7 @@ Firmware UEFI ─► UEFI Shell ─► Python.efi (CPython 3.6.8 para UEFI)
 ```
 
 Dual kernel, ejecución dual y estado de cada pieza (implementado / experimental /
-imposible y por qué): [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+imposible y por qué): `docs/ARCHITECTURE.md` (en el `.zip` de la Release).
 
 Nada del proyecto está escrito en C, C++, Rust ni ensamblador. `Python.efi` y el
 UEFI Shell son binarios de terceros compilados **sin modificar** desde las fuentes
@@ -23,7 +23,13 @@ binario de CPython en un PC: el intérprete donde corre nuestro Python.
 
 ## Probarlo
 
-Descarga la imagen de la última versión en **[Releases](../../releases)**:
+## 📦 Releases
+
+Este repositorio es el escaparate del proyecto. **El código va en las Releases**: cada versión
+trae su `PyOS-vU.P.S.zip` con todo PyOS (kernel, userland, LOOK, tests, documentación y
+herramientas de construcción) y las imágenes de disco listas para arrancar.
+
+Descarga la última versión en **[Releases](../../releases)**:
 
 | Hipervisor | Fichero | Firmware |
 |---|---|---|
@@ -32,10 +38,10 @@ Descarga la imagen de la última versión en **[Releases](../../releases)**:
 | VMware | `pyos-vU.P.S.vmdk` | UEFI, sin Secure Boot |
 | QEMU | `pyos-vU.P.S.img` | OVMF |
 
-Guía paso a paso en [`docs/VM.md`](docs/VM.md). Para la red en VirtualBox: adaptador NAT de tipo
-*Intel PRO/1000 MT Desktop* ([`docs/NET.md`](docs/NET.md)).
+Guía paso a paso en `docs/VM.md` (en el `.zip` de la Release). Para la red en VirtualBox: adaptador NAT de tipo
+*Intel PRO/1000 MT Desktop* (ver `docs/NET.md` en el `.zip`).
 
-En el host (desarrollo, con la máquina emulada):
+En el host (desarrollo, con la máquina emulada), desde la carpeta del `.zip` descomprimido:
 ```bash
 python -m pyos mkimage pyos.img && python -m pyos run pyos.img
 python -m pyos run pyos.img --linux           # sobre un host Linux: activa 'lx' (procesos Linux reales)
@@ -55,7 +61,7 @@ sudo python -m pyos.tools.mkuefi build/uefi   # construye las imágenes de VM (L
 | **Teclado PS/2** (i8042) | El firmware lo suelta (`disconnect`) y PyOS lee scancodes del puerto 0x60. Distribuciones `es` y `us`, teclas muertas (á, ü…), Ctrl+Alt+Supr |
 | **UART 16550** (COM1) | Registros 0x3F8–0x3FF, por sondeo |
 | **Bus PCI** | Enumeración del bus 0 (`/proc/pci`, `hwinfo`) |
-| **Intel e1000** (82540EM) | MMIO por BAR0, anillos DMA en RAM física, DHCP. Pila TCP/IP en Python: [`docs/NET.md`](docs/NET.md) |
+| **Intel e1000** (82540EM) | MMIO por BAR0, anillos DMA en RAM física, DHCP. Pila TCP/IP en Python: `docs/NET.md` (en el `.zip` de la Release) |
 | **RAM física** | 16 MiB reservados al firmware: el mapa de marcos y las **tablas de páginas viven en RAM física real** |
 
 El firmware solo se usa para tres cosas: la consola de texto, el sistema de archivos FAT
@@ -106,7 +112,7 @@ Calculadora, Calendario, Aplicaciones (pkg), Ajustes (temas, alto contraste, fon
 servicios) y Juegos (Buscaminas, Serpiente, Arcade). Portapapeles, rueda del ratón, menús
 contextuales y aplicaciones de terceros en `/usr/share/look/apps` (`LOOK_API = 1`).
 El kernel escribe en el framebuffer real del adaptador de vídeo y maneja el ratón PS/2;
-LOOK es un proceso de la PVM. Detalles, requisitos de la VM y límites: [`docs/LOOK.md`](docs/LOOK.md).
+LOOK es un proceso de la PVM. Detalles, requisitos de la VM y límites: `docs/LOOK.md` (en el `.zip` de la Release).
 
 ### Juegos 2D (`arcade`, preinstalado)
 `arcade` abre el menú; también se lanzan sueltos: `snake`, `tetris`, `pong`, `breakout`,
@@ -129,12 +135,12 @@ acceso a `SetAttribute`; en modo alojado (terminal del host) los colores sí fun
 | `dev`, `dev pci`, `dev irq`, `dev kbd es\|us` | dispositivos, IRQ y distribución de teclado en caliente |
 | `lx [-i] orden`, `lx shell` | programas del kernel Linux real (solo con PyOS alojado sobre Linux y `--linux`) |
 
-Limitaciones, decisiones y alternativas: [`docs/LIMITATIONS.md`](docs/LIMITATIONS.md).
+Limitaciones, decisiones y alternativas: `docs/LIMITATIONS.md` (en el `.zip` de la Release).
 
 ## Proyecto
 
 - [CHANGELOG.md](CHANGELOG.md): qué cambia en cada versión y la política de versionado U.P.S.
-- [CONTRIBUTING.md](CONTRIBUTING.md): cómo contribuir (y la regla de oro: todo en Python).
+- `CONTRIBUTING.md` (en el `.zip` de la Release): cómo contribuir (y la regla de oro: todo en Python).
 - [SECURITY.md](SECURITY.md): cómo informar de una vulnerabilidad.
 - Licencia: [Apache-2.0](LICENSE). Componentes de terceros y sus licencias: [NOTICE](NOTICE) y
   [`licenses/`](licenses).
