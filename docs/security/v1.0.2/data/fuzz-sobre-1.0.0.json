@@ -1,0 +1,40 @@
+{
+ "sin_estado": {
+  "fallos": 0,
+  "detalle": [],
+  "cobertura": {
+   "_arp_in": 1748,
+   "_ip_in": 16756,
+   "_tcp_in": 5835,
+   "_udp_in": 4447,
+   "_dhcp_in": 1893,
+   "_icmp_in": 1321
+  },
+  "segundos": 0.5
+ },
+ "con_estado": {
+  "fallos": 10,
+  "detalle": [
+   "IndexError _dhcp_in 732 | index out of range | DHCP tras dhcp_start",
+   "IndexError _parse_mss 381 | index out of range | TCP tras listen",
+   "IndexError _parse_mss 389 | index out of range | TCP tras listen",
+   "TypeError ip2s 13 | not enough arguments for format string | DHCP tras dhcp_start",
+   "cuelgue TCP tras connect | la pila no devuelve el control en 2 s | TCP tras connect",
+   "cuelgue TCP tras listen | la pila no devuelve el control en 2 s | TCP tras listen",
+   "error _dhcp_in 743 | unpack requires a buffer of 4 bytes | DHCP tras dhcp_start",
+   "error _parse_mss 391 | unpack requires a buffer of 2 bytes | TCP tras listen",
+   "invariante DNS devuelve una IP | DNS devuelve una IP de 1 bytes | DNS tras resolve",
+   "invariante MSS del otro extremo | MSS del otro extremo = 0 | TCP tras listen"
+  ],
+  "cobertura": {
+   "_ip_in": 18756,
+   "_icmp_in": 732,
+   "_tcp_in": 11110,
+   "_udp_in": 3768,
+   "_dns_in": 1510,
+   "_dhcp_in": 2003,
+   "_arp_in": 967
+  },
+  "segundos": 163.3
+ }
+}

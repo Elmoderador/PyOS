@@ -1,0 +1,146 @@
+[2J[2J[=3hBdsDxe: loading Boot0001 "UEFI QEMU HARDDISK QM00001 " from PciRoot(0x0)/Pci(0x1,0x1)/Ata(Primary,Master,0x0)
+BdsDxe: starting Boot0001 "UEFI QEMU HARDDISK QM00001 " from PciRoot(0x0)/Pci(0x1,0x1)/Ata(Primary,Master,0x0)
+UEFI Interactive Shell v2.2
+EDK II
+UEFI v2.70 (Ubuntu distribution of EDK II, 0x00010000)
+[33mMapping table[40m
+      FS0: [37m[40mAlias(s):HD0a1:;BLK1:
+          PciRoot(0x0)/Pci(0x1,0x1)/Ata(0x0)/HD(1,GPT,CFC0DF5B-B5E1-4827-B0BC-2F38475408B2,0x800,0x50000)
+     BLK0: [40mAlias(s):
+          PciRoot(0x0)/Pci(0x1,0x1)/Ata(0x0)
+     BLK2: Alias(s):[40m
+          PciRoot(0x0)/Pci(0x1,0x1)/Ata(0x0)
+Press ESC in 5 seconds to skip startup.nsh[40m or any other key to continue.Press ESC in 4 seconds to skip startup.nsh or any other key to continue.Press [1m[37mESC in 3 seconds to skip startup.nsh or any other key to continue.Press ESC in 2 seconds to skip startup.nsh or any other key to continue.Press [40mESC in 1 seconds to skip startup.nsh or any other key to continue.
+Buscando PyOS...
+
+PyOS: iniciando máquina sobre UEFI (sin sistema operativo)...
+  - el firmware cede el teclado y el puerto serie a PyOS
+UEFI Interactive Shell v2.2
+EDK II
+UEFI v2.70 (Ubuntu distribution of EDK II, 0x00010000)
+Mapping table
+      FS0: [37mAlias(s):HD0a1:;BLK1:
+          PciRoot(0x0)/Pci(0x1,0x1)/Ata(0x0)/HD(1,GPT,CFC0DF5B-B5E1-4827-B0BC-2F38475408B2,0x800,0x50000)
+     BLK0: Alias(s):
+          PciRoot(0x0)/Pci(0x1,0x1)/Ata(0x0)
+     BLK2: [37mAlias(s):[37m[40m
+          PciRoot(0x0)/Pci(0x1,0x1)/Ata(0x0)
+UEFI Interactive Shell v2.2
+EDK II
+UEFI v2.70 (Ubuntu distribution of EDK II, 0x00010000)
+Mapping table
+[40m      FS0: Alias(s):HD0a1:;BLK1:
+          PciRoot(0x0)/Pci(0x1,0x1)/Ata(0x0)/HD(1,GPT,CFC0DF5B-B5E1-4827-B0BC-2F38475408B2,0x800,0x50000)
+     BLK0:[40m Alias(s):
+          PciRoot(0x0)/Pci(0x1,0x1)/Ata(0x0)
+     BLK2: [37mAlias(s):[37m
+          PciRoot(0x0)/Pci(0x1,0x1)/Ata(0x0)
+UEFI Interactive Shell v2.2
+EDK II
+UEFI v2.70 (Ubuntu distribution of EDK II, 0x00010000)
+Mapping table
+      FS0: Alias(s):[37mHD0a1:;BLK1:
+          PciRoot(0x0)/Pci(0x1,0x1)/Ata(0x0)/HD(1,GPT,CFC0DF5B-B5E1-4827-B0BC-2F38475408B2,0x800,0x50000)
+[40m     BLK0: [40mAlias(s):[37m
+          PciRoot(0x0)/Pci(0x1,0x1)/Ata(0x0)
+     BLK2:[0m[37m[40m Alias(s):
+          PciRoot(0x0)/Pci(0x1,0x1)/Ata(0x0)
+PyOS BIOS v1.0 [uefi]
+POST OK: 16384 KiB de RAM, disco de 131072 sectores
+
+  PyOS — Your machine. Your system. Your rules.
+
+  Elige cómo arrancar (flechas + Intro, o el número):
+
+     1. PyOS LOOK                entorno gráfico (opcional)
+   > 2. PyOS Term                terminal de administración
+
+  (no se ha encontrado ninguna distribución Linux instalada)
+  Esperando tu elección: no se arrancará nada automáticamente.
+Modo de arranque: PyOS Term
+PyOS bootloader: kernel en LBA 1, 96270 bytes
+PyOS bootloader: SHA-256 OK 1b525dc0dc0c0a86...
+PyOS bootloader: saltando a kernel_main
+[   0.0020] PyOS 1.0.2 - kernel en Python, procesos sobre CPU virtual PVM
+[   0.0082] plataforma: hardware real sobre UEFI (sin sistema operativo)
+[   0.0122] cpu: QEMU Virtual CPU version 2.5+
+[   0.0181] cmdline: init=/sbin/init.py quantum=5 hz=100 kbd=es mode=term
+[   0.0217] kernel: 96270 bytes sha256=1b525dc0dc0c0a86
+[   0.0302] mm: 4096 marcos de 4 KiB (16384 KiB), 2 reservados, bitmap en 0x1000
+[   0.0342] sched: round-robin apropiativo, quantum=5 ticks, rodaja adaptativa (>= 300 instrucciones)
+[   0.0394] dev: tty (4,0) irq 4 consola con disciplina de línea
+[   0.0427] dev: kbd (13,0) irq 1 teclado PS/2 (i8042, scancode set 1)
+[   0.0460] dev: null (1,3) sumidero
+[   0.0481] dev: zero (1,5) fuente de ceros
+[   0.0503] dev: random (1,8) fuente de entropía de la plataforma
+[   0.0532] dev: hda (3,0) disco ATA (acceso crudo, solo lectura)
+[   0.0561] timer: ACPI PM timer en puerto 0xb008 (Intel PIIX4 ACPI), 100 Hz
+[   0.0610] net: Intel 82540EM (e1000), MAC 52:54:00:12:34:56, enlace activo
+[   0.0649] linux: subsistema no disponible (sin kernel Linux debajo)
+[   0.0952] pyfs: montado / (14945/15360 bloques libres)
+[   0.7108] init: lanzado /sbin/init.py (pid 1)
+
+  ____        ___  ____     PyOS — kernel 100% Python
+ |  _ \ _   _/ _ \/ ___|    procesos sobre la CPU virtual PVM
+ | |_) | | | | | | \___ \
+ |  __/| |_| | |_| |___) |   'help' para ver órdenes
+ |_|    \__, |\___/|____/    Ctrl+Alt+Supr reinicia
+        |___/
+
+svc: logd arrancado (pid 3)
+[   1.3738] net: dhcp 10.0.2.15/255.255.255.0 puerta 10.0.2.2 dns 10.0.2.3
+PyOS Term — 'help' lista las órdenes, 'pyos' la administración del sistema.
+root@pyos:/root# 
+=== shell tras 63 s ===
+python -c 'x = 10 ** 10 ** 8'
+OverflowError: entero demasiado grande para la PVM (máximo 131072 bits)
+root@pyos:/root# 
+=== bomba: OK en 0.9 s ===
+python -c 'x = sum(iter(int, 1))'
+OverflowError: demasiados elementos para una sola operación (200001, máximo 200000): recórrelos con un bucle
+root@pyos:/root# 
+=== iter: OK en 2.5 s ===
+python -c 'x = {type("A", (), {"__hash__": lambda s: [0 for _ in iter(int, 1)]})()}'
+TimeoutError: código de usuario llamado desde una operación del sistema (sorted, sum, __hash__...) superó su tiempo: más de 250000 instrucciones sin devolver el control al planificador
+root@pyos:/root# 
+=== gen: OK en 6.4 s ===
+python -c 'l = [[i, i] for i in range(3000000)]'
+[ 169.0957] memoria: pid 8 (python.py) supera su cuota de 64 MB (medidos 64 MB); se le mata
+Killed
+root@pyos:/root# 
+=== memoria: OK en 165.5 s ===
+echo 'def main(argv):' > /bin/cpuhog.py
+root@pyos:/root# 
+=== cpuhog1: OK en 1.1 s ===
+echo '    setrlimit("cpu", 1)' >> /bin/cpuhog.py
+root@pyos:/root# 
+=== cpuhog2: OK en 1.2 s ===
+echo '    while True:' >> /bin/cpuhog.py
+root@pyos:/root# 
+=== cpuhog3: OK en 1.0 s ===
+echo '        pass' >> /bin/cpuhog.py
+root@pyos:/root# 
+=== cpuhog4: OK en 1.1 s ===
+cpuhog
+[ 178.1704] cpu: pid 13 (cpuhog.py) agotó su límite de CPU (1 s); se le mata
+Killed
+root@pyos:/root# 
+=== cpu: OK en 1.4 s ===
+svc start httpd
+svc: httpd arrancado (pid 15)
+root@pyos:/root# 
+=== httpd: OK en 0.9 s ===
+wget http://127.0.0.1/ -O /root/i.html
+HTTP 200 — 315 bytes en 0.1 s (2.2 KiB/s) -> /root/i.html
+root@pyos:/root# 
+=== web: OK en 1.2 s ===
+echo VIVO-UEFI
+VIVO-UEFI
+root@pyos:/root# 
+=== vivo: OK en 0.5 s ===
+[ 180.8743] acpi: botón de encendido pulsado
+[ 180.8770] halt: solicitado 'poweroff', terminando procesos
+[ 181.0905] halt: sincronizando y desmontando sistemas de archivos
+[ 181.1106] Sistema detenido.
+
+UEFI QUOTA OK [('bomba', 0.9), ('iter', 2.5), ('gen', 6.4), ('memoria', 165.5), ('cpuhog1', 1.1), ('cpuhog2', 1.2), ('cpuhog3', 1.0), ('cpuhog4', 1.1), ('cpu', 1.4), ('httpd', 0.9), ('web', 1.2), ('vivo', 0.5)]

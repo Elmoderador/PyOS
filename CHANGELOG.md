@@ -27,6 +27,72 @@ Las versiones se etiquetan en Git como `vU.P.S` y cada una tiene su Release con 
 
 ---
 
+## 1.0.2 — 2026-11-22 · Security (Shield Update II)
+
+Cierra los tres límites que la 1.0.1 dejó documentados. `LOOK_API` sigue en 1 y ninguna
+syscall cambia de significado. Para poder imponer los límites hay **interfaces nuevas**
+(syscalls 77–79, un argumento opcional de `uptime`, `ulimit` en la shell) y **programas que
+antes funcionaban pueden fallar ahora con un error claro** (ver "Límites nuevos").
+
+### CPU: ninguna instrucción puede congelar el planificador
+El planificador solo expulsa a un proceso entre instrucciones de la PVM, y una instrucción podía
+ejecutar C del anfitrión sin fin. En 3.6 (el intérprete del arranque UEFI), 9 de 10 ataques
+congelaban el sistema en la 1.0.1; en la 1.0.2 ninguno lo deja sin control más de ~0,2 s.
+- Enteros de como mucho 131 072 bits (`10 ** 10 ** 8`, `1 << (1 << 40)`, `int.from_bytes`),
+  `pow()` con módulo con un modelo de coste, `round(x, -10 ** 8)` sin calcular la potencia.
+- Las builtins de C (`sum`, `max`, `sorted`, `list`, `str.join`, `[*x]`...) recorren como mucho
+  1 000 000 de elementos por llamada, o 200 000 si vienen de un iterador perezoso.
+- **Código de usuario llamado desde C** (`sorted(key=...)`, `__hash__`, un generador que
+  consume `sum()`) se ejecutaba sin expropiación: ahora comparte un presupuesto de 250 000
+  instrucciones por rodaja y, si lo agota, falla con `TimeoutError`.
+- Anchos y precisiones de formato de como mucho 1 048 576 (`'{:>1000000000}'`, `'%*d'`, f-strings).
+
+### Memoria: cuota por proceso
+- Cada proceso tiene una cuota (64 MB por defecto; `memquota=` en la línea del kernel). Las
+  reservas grandes (`bytes(n)`, `'x' * n`, `ljust`, `replace`, `join`...) se comprueban **antes**
+  de reservar (`MemoryError` en el programa); lo que se acumula poco a poco lo mide un recorrido
+  del heap por partes entre rodajas, y el proceso que se pasa recibe SIGKILL.
+- El CPython del arranque UEFI está compilado sin pymalloc, así que la señal de "este proceso
+  crece" sale de los contadores del recolector de basura. Sin ella, en la prueba UEFI un
+  proceso llegó a dejar sin memoria la VM de 512 MB antes de que se le midiera (encontrado y
+  corregido antes de publicar; `tests/test_quota.py` simula ahora ese CPython).
+- `setrlimit`/`getrlimit` (77, 78) y `ulimit [-m MB] [-t S]` en la shell: límites de memoria y de
+  tiempo de CPU que heredan los hijos y que solo se pueden bajar.
+- `/proc/<pid>/status`: `VmHeap`, `VmHeapPeak`, `MemQuota`, `CpuLimit`.
+
+### httpd concurrente
+- Nueva syscall `poll()` (79): espera en varios descriptores a la vez (sockets, tuberías).
+- `httpd` es un bucle de eventos: atiende hasta 32 conexiones a la vez; con todas ocupadas,
+  expulsa a la más antigua que aún no ha terminado de enviar su petición. Con 40 conexiones
+  Slowloris abiertas, una petición legítima tarda lo mismo que sin ellas (dentro del ruido de
+  medida); en la 1.0.1 cada una le añadía 10 s.
+- `uptime(True)` / `uptime_us()`: microsegundos del reloj monótono, para medir latencias.
+
+### Fuzzer de red con estado
+- `tests/netfuzz.py` graba una sesión como guion y lleva la pila al estado exacto en que espera
+  cada trama (arranque DHCP, consulta DNS abierta, conexión enviando), muta esa trama con
+  mutaciones que entienden el protocolo y comprueba cuelgues e invariantes (direcciones de 4
+  bytes, MSS válido), no solo excepciones. Contra el código de la 1.0.0 encuentra 10 fallos
+  distintos —las cinco clases de fallo de red de la 1.0.1— donde el fuzzer anterior encontraba 0.
+- **Corregido en el fuzzer de la 1.0.1:** `fix_checksums` sumaba el relleno Ethernet y rompía la
+  suma de toda trama TCP de menos de 60 bytes (SYN, SYN-ACK, ACK): sus mutaciones nunca pasaban
+  de la comprobación de la suma.
+- `tests/sysfuzz.py` cubre también las syscalls nuevas: encontró que `uptime` evaluaba
+  `if precise:` sobre un objeto del usuario (código del usuario dentro del kernel). Corregido
+  antes de publicar.
+
+### Límites nuevos (pueden romper programas)
+- `sum(range(2_000_000))` y similares fallan con `OverflowError`: hay que recorrer con un bucle.
+- Enteros de más de 131 072 bits, anchos de formato de más de 1 048 576, `sorted(key=...)` con
+  más de ~10 000 elementos (presupuesto anidado): errores en lugar de congelar el sistema.
+- Coste: la PVM es un ~8 % más lenta en el banco de pruebas (`tests/pvm_bench.py`, CPython 3.6).
+
+### Herramientas
+- `tests/secbench.py`: ataques de CPU, memoria, latencia de `httpd` y comparación de fuzzers.
+- `tests/test_quota.py`, `tests/test_poll.py`, `tests/uefi_quota.py` (cuotas en el arranque UEFI real).
+
+---
+
 ## 1.0.1 — 2026-11-21 · Security
 
 Solo arreglos de seguridad, encontrados en una auditoría con fuzzers (red, syscalls, interfaz)

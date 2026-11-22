@@ -1,0 +1,63 @@
+{
+ "pow": {
+  "resultado": "congelado: sin devolver el control en 20 s (cortado)",
+  "peor_rodaja_s": 20.0,
+  "cortado": true,
+  "segundos": 20.0
+ },
+ "round": {
+  "resultado": "congelado: sin devolver el control en 20 s (cortado)",
+  "peor_rodaja_s": 20.0,
+  "cortado": true,
+  "segundos": 20.0
+ },
+ "powmod": {
+  "resultado": "congelado: sin devolver el control en 20 s (cortado)",
+  "peor_rodaja_s": 20.0,
+  "cortado": true,
+  "segundos": 20.0
+ },
+ "str_int": {
+  "ataque": "str_int",
+  "peor_rodaja_s": 1.6457,
+  "total_s": 1.646,
+  "resultado": "terminó",
+  "segundos": 1.7
+ },
+ "sum_range": {
+  "resultado": "congelado: sin devolver el control en 20 s (cortado)",
+  "peor_rodaja_s": 20.0,
+  "cortado": true,
+  "segundos": 20.0
+ },
+ "max_range": {
+  "resultado": "congelado: sin devolver el control en 20 s (cortado)",
+  "peor_rodaja_s": 20.0,
+  "cortado": true,
+  "segundos": 20.0
+ },
+ "iter_sum": {
+  "resultado": "congelado: sin devolver el control en 20 s (cortado)",
+  "peor_rodaja_s": 20.0,
+  "cortado": true,
+  "segundos": 20.0
+ },
+ "gen_sum": {
+  "resultado": "congelado: sin devolver el control en 20 s (cortado)",
+  "peor_rodaja_s": 20.0,
+  "cortado": true,
+  "segundos": 20.0
+ },
+ "hash": {
+  "resultado": "congelado: sin devolver el control en 20 s (cortado)",
+  "peor_rodaja_s": 20.0,
+  "cortado": true,
+  "segundos": 20.0
+ },
+ "sort_key": {
+  "resultado": "congelado: sin devolver el control en 20 s (cortado)",
+  "peor_rodaja_s": 20.0,
+  "cortado": true,
+  "segundos": 20.0
+ }
+}

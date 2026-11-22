@@ -1,0 +1,56 @@
+{
+ "101": {
+  "base": 23,
+  "pequeños": {
+   "tipo": "pequeños",
+   "resultado": "MEMHOG llego a 3000000 objetos",
+   "pico_mb": 491,
+   "base_mb": 32,
+   "crecimiento_mb": 458,
+   "sistema_vivo": true,
+   "segundos": 17.0,
+   "nota": "llegó a sus 3 M listas (tope del propio programa)",
+   "neto_mb": 435,
+   "corta": "paró en su propio tope"
+  },
+  "grandes": {
+   "tipo": "grandes",
+   "resultado": "BIGHOG llego a 512 MB",
+   "pico_mb": 567,
+   "base_mb": 32,
+   "crecimiento_mb": 535,
+   "sistema_vivo": true,
+   "segundos": 0.5,
+   "nota": "llegó a sus 512 MB (tope del propio programa)",
+   "neto_mb": 512,
+   "corta": "paró en su propio tope"
+  }
+ },
+ "dev": {
+  "base": 24,
+  "pequeños": {
+   "tipo": "pequeños",
+   "resultado": "matado por superar su cuota de 64 MB",
+   "pico_mb": 130,
+   "base_mb": 33,
+   "crecimiento_mb": 98,
+   "sistema_vivo": true,
+   "segundos": 3.6,
+   "nota": "SIGKILL al superar la cuota",
+   "neto_mb": 74,
+   "corta": "SIGKILL (cuota)"
+  },
+  "grandes": {
+   "tipo": "grandes",
+   "resultado": "BIGHOG MemoryError tras 63 MB",
+   "pico_mb": 119,
+   "base_mb": 33,
+   "crecimiento_mb": 86,
+   "sistema_vivo": true,
+   "segundos": 0.2,
+   "nota": "MemoryError al llegar a la cuota",
+   "neto_mb": 62,
+   "corta": "MemoryError (cuota)"
+  }
+ }
+}

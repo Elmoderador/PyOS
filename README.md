@@ -1,6 +1,6 @@
 # PyOS — Python Operating System
 
-**Versión 1.0.1** · Licencia [Apache-2.0](LICENSE) · Versionado [U.P.S.](CHANGELOG.md) (Update.Patch.Security)
+**Versión 1.0.2** · Licencia [Apache-2.0](LICENSE) · Versionado [U.P.S.](CHANGELOG.md) (Update.Patch.Security)
 
 Sistema operativo con el kernel escrito **íntegramente en Python** que arranca en una
 máquina virtual **sin Linux ni ningún otro sistema operativo debajo**: solo el
@@ -94,6 +94,9 @@ ejecuta en su propia CPU virtual (`kernel/cpu/vm.py`), con marcos explícitos. E
   prueba 10 vías de escape y todas quedan bloqueadas.
 - **`fork()` real:** copia del estado completo de la CPU y de la memoria; hasta los
   generadores a medio ejecutar se duplican.
+- **Coste acotado y cuotas** (desde la 1.0.2): ninguna instrucción puede dejar al planificador
+  sin control (`10 ** 10 ** 8`, `sum(range(10 ** 12))`, un `__hash__` que no termina…), y cada
+  proceso tiene cuota de memoria y, si se pide, límite de CPU (`ulimit -m` / `ulimit -t`).
 
 El compilador cubre funciones, closures, generadores, clases con herencia y métodos
 especiales, `try/except/finally`, `with`, comprensiones, f-strings y desempaquetado.

@@ -8,6 +8,7 @@ Cada versión de seguridad (la **S** de U.P.S.) trae un informe que lanza los mi
 
 | Versión | Fecha | Resultado | Informe |
 |---|---|---|---|
+| **v1.0.2** | 2026-11-22 | Cuotas de CPU y memoria, `httpd` concurrente, fuzzer de red con estado | [security/v1.0.2](security/v1.0.2/) |
 | **v1.0.1** | 2026-11-21 | 13 de 13 escenarios de ataque cerrados | [security/v1.0.1](security/v1.0.1/) |
 
 Para informar de una vulnerabilidad, mira [SECURITY.md](../SECURITY.md).

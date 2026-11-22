@@ -22,12 +22,22 @@ no hay usuarios ni permisos, todo se ejecuta como un único usuario, y la red no
 
 Tampoco lo son, de momento, estos límites conocidos:
 
-- **Sin cuotas de recursos por proceso.** Los objetos de un programa de la PVM son objetos del
-  intérprete anfitrión: un programa que llene la memoria la agota para todo el sistema, y una
-  sola operación enorme (`10 ** 10 ** 8`) bloquea el planificador mientras dura.
+- **Las cuotas de memoria se comprueban, no se garantizan al byte.** Las reservas grandes se
+  rechazan antes de hacerse, pero lo que un proceso acumula poco a poco se mide entre rodajas:
+  puede pasarse de su cuota durante un momento (lo que cree hasta la siguiente medida) antes de
+  recibir SIGKILL. Los búferes del kernel (sockets, tuberías, pantalla) no cuentan en la cuota
+  del proceso; tienen sus propios topes.
+- **Coste por instrucción acotado, no nulo.** Ninguna instrucción de la PVM deja al planificador
+  sin control más de ~0,2 s en CPython 3.6 nativo (más en máquinas lentas o emuladas): un
+  proceso puede seguir causando pausas cortas repetidas. Sin `ulimit -t`, un proceso puede usar
+  toda su parte de CPU indefinidamente (el planificador reparte por turnos).
+- **`httpd` atiende 32 conexiones a la vez.** Con más, expulsa a la más antigua que no ha
+  terminado su petición: un atacante con muchas conexiones puede expulsar a un cliente legítimo
+  que sea lento, aunque ya no puede retrasar a los que envían su petición a tiempo.
 - **Las aplicaciones de LOOK** (`/usr/share/look/apps`) se ejecutan dentro del proceso de LOOK,
   con sus mismos permisos: instala solo las que conozcas.
 
 Sí son vulnerabilidades, por ejemplo: que un programa de usuario escape del aislamiento de la
-PVM y ejecute Python del anfitrión, que lea o escriba memoria del kernel, o que un paquete de
-red malformado haga caer el kernel.
+PVM y ejecute Python del anfitrión, que lea o escriba memoria del kernel, que un paquete de
+red malformado haga caer el kernel, o que una sola instrucción de la PVM deje al planificador
+sin control durante segundos o que un proceso agote la memoria de todo el sistema.

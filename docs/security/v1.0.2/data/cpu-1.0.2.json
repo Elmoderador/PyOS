@@ -1,0 +1,72 @@
+{
+ "pow": {
+  "ataque": "pow",
+  "peor_rodaja_s": 0.0,
+  "total_s": 0.0,
+  "resultado": "OverflowError: entero demasiado grande para la PVM (máximo 131072 bits)",
+  "segundos": 0.1
+ },
+ "round": {
+  "ataque": "round",
+  "peor_rodaja_s": 0.0001,
+  "total_s": 0.0,
+  "resultado": "terminó",
+  "segundos": 0.1
+ },
+ "powmod": {
+  "ataque": "powmod",
+  "peor_rodaja_s": 0.0001,
+  "total_s": 0.0,
+  "resultado": "OverflowError: pow() con módulo demasiado caro para una sola operación",
+  "segundos": 0.1
+ },
+ "str_int": {
+  "ataque": "str_int",
+  "peor_rodaja_s": 0.0001,
+  "total_s": 0.0,
+  "resultado": "OverflowError: entero demasiado grande para la PVM (máximo 131072 bits)",
+  "segundos": 0.1
+ },
+ "sum_range": {
+  "ataque": "sum_range",
+  "peor_rodaja_s": 0.0001,
+  "total_s": 0.0,
+  "resultado": "OverflowError: demasiados elementos para una sola operación (1000000000000, máximo 1000000): recórrelos c",
+  "segundos": 0.1
+ },
+ "max_range": {
+  "ataque": "max_range",
+  "peor_rodaja_s": 0.0001,
+  "total_s": 0.0,
+  "resultado": "OverflowError: demasiados elementos para una sola operación (1000000000000, máximo 1000000): recórrelos c",
+  "segundos": 0.1
+ },
+ "iter_sum": {
+  "ataque": "iter_sum",
+  "peor_rodaja_s": 0.1578,
+  "total_s": 0.158,
+  "resultado": "OverflowError: demasiados elementos para una sola operación (200001, máximo 200000): recórrelos con un bu",
+  "segundos": 0.2
+ },
+ "gen_sum": {
+  "ataque": "gen_sum",
+  "peor_rodaja_s": 0.1465,
+  "total_s": 0.147,
+  "resultado": "TimeoutError: código de usuario llamado desde una operación del sistema (sorted, sum, __hash__...) super",
+  "segundos": 0.2
+ },
+ "hash": {
+  "ataque": "hash",
+  "peor_rodaja_s": 0.1066,
+  "total_s": 0.107,
+  "resultado": "TimeoutError: código de usuario llamado desde una operación del sistema (sorted, sum, __hash__...) super",
+  "segundos": 0.2
+ },
+ "sort_key": {
+  "ataque": "sort_key",
+  "peor_rodaja_s": 0.1059,
+  "total_s": 0.106,
+  "resultado": "TimeoutError: código de usuario llamado desde una operación del sistema (sorted, sum, __hash__...) super",
+  "segundos": 0.2
+ }
+}

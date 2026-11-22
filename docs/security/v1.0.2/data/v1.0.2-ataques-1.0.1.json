@@ -1,0 +1,132 @@
+{
+ "dhcp_direcciones_cortas": {
+  "ok": true,
+  "resultado": "direcciones cortas descartadas, configuración válida",
+  "segundos": 0.1
+ },
+ "dhcp_opcion_vacia": {
+  "ok": true,
+  "resultado": "respuesta descartada, DHCP sigue esperando",
+  "segundos": 0.1
+ },
+ "dns_truncado": {
+  "ok": true,
+  "resultado": "registro truncado ignorado",
+  "segundos": 0.1
+ },
+ "fuzz_red": {
+  "ok": true,
+  "resultado": "0 fallos distintos en 20 000 tramas",
+  "por_semilla": {
+   "1": 0,
+   "2": 0,
+   "3": 0,
+   "4": 0,
+   "5": 0
+  },
+  "distintos": 0,
+  "tipos": [],
+  "segundos": 0.3
+ },
+ "httpd": {
+  "ok": true,
+  "xss": false,
+  "atacante_s": 30.0,
+  "espera_s": 0.01,
+  "servida": true,
+  "resultado": "XSS escapado; petición legítima esperó 0.01 s con un atacante de 30 s",
+  "segundos": 1.4
+ },
+ "httpd_latencia": {
+  "ok": true,
+  "atacantes": 0,
+  "peticiones": 20,
+  "servidas": 20,
+  "min_ms": 1.954,
+  "mediana_ms": 2.084,
+  "max_ms": 2.703,
+  "total_ms": 42.719,
+  "muestras_us": [
+   1954,
+   1978,
+   1991,
+   2007,
+   2023,
+   2023,
+   2050,
+   2057,
+   2060,
+   2065,
+   2084,
+   2096,
+   2113,
+   2147,
+   2181,
+   2200,
+   2245,
+   2326,
+   2416,
+   2703
+  ],
+  "resultado": "20/20 servidas; mediana 2.08 ms, máx 2.70 ms con 0 atacantes",
+  "segundos": 0.9
+ },
+ "irq_driver_roto": {
+  "ok": true,
+  "resultado": "fallo registrado; el otro driver atendió 4/4",
+  "segundos": 0.0
+ },
+ "klog": {
+  "ok": true,
+  "resultado": "texto saneado, dmesg intacto",
+  "segundos": 0.4
+ },
+ "mss_cero": {
+  "ok": true,
+  "resultado": "MSS acotado a 88; 5 KB en 0.7 ms",
+  "ms": 0.7,
+  "segundos": 0.1
+ },
+ "pkg": {
+  "ok": true,
+  "ataques": 4,
+  "exitosos": 0,
+  "resultado": "4 de 4 paquetes maliciosos rechazados; el legítimo se instala",
+  "legitimo": true,
+  "segundos": 0.4
+ },
+ "pkg_tamano_negativo": {
+  "ok": true,
+  "resultado": "rechazado (paquete inválido: tamaño negativo en /opt/x)",
+  "s": 0.1,
+  "segundos": 0.3
+ },
+ "str_format": {
+  "ok": true,
+  "fugas": 0,
+  "de": 6,
+  "resultado": "0 de 6: todas bloqueadas",
+  "ejemplo": "",
+  "segundos": 0.1
+ },
+ "sysfuzz": {
+  "ok": true,
+  "syscalls": 73,
+  "superadas": 73,
+  "oops": 0,
+  "fin": true,
+  "dmesg_roto": false,
+  "resultado": "kernel en pie tras 73/73 syscalls",
+  "segundos": 1.7
+ },
+ "tcp_offset": {
+  "ok": true,
+  "resultado": "segmentos imposibles descartados",
+  "segundos": 0.0
+ },
+ "trama_que_rompe_la_pila": {
+  "ok": true,
+  "resultado": "tramas descartadas y contadas (2)",
+  "segundos": 0.0
+ }
+}
