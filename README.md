@@ -21,6 +21,55 @@ UEFI Shell son binarios de terceros compilados **sin modificar** desde las fuent
 oficiales de TianoCore (`edk2`, `edk2-libc`). Tienen el mismo papel que el
 binario de CPython en un PC: el intérprete donde corre nuestro Python.
 
+## PyOS 2.0.0 en marcha
+
+Capturas reales de la pantalla de la VM con la imagen UEFI de PyOS 2.0.0 en QEMU 8.2 + OVMF
+(emulación TCG, sin KVM). No hay nada simulado ni retocado. Solo se han recortado las esperas,
+se han quitado los fotogramas capturados a mitad de un repintado y se ha escalado a 960×600.
+
+> La 2.0.0 todavía está en preparación y no se ha publicado en Releases: la versión publicada
+> es la 1.0.2. Estas capturas muestran el estado actual del desarrollo.
+
+### Arranque: del firmware UEFI a LOOK
+UEFI Shell, `start.py`, el selector de arranque, el registro del kernel y el escritorio LOOK.
+
+![Arranque de PyOS desde el firmware UEFI hasta el escritorio LOOK](docs/media/pyos-arranque-hasta-look.gif)
+
+### LOOK: Terminal
+Terminal gráfica de LOOK con `uc estado`: versión instalada, conjuntos A/B y política de
+actualizaciones. Bajo emulación TCG la ventana tarda en abrirse; esa espera está recortada.
+
+![Terminal de LOOK ejecutando uc estado](docs/media/pyos-look-terminal.gif)
+
+### LOOK: lanzador y Monitor
+Alt+L abre «Buscar y lanzar». Al abrir Monitor se ven la memoria, los volúmenes, los servicios
+y los procesos de la PVM en tiempo real.
+
+![Lanzador de LOOK abriendo el Monitor del sistema](docs/media/pyos-look-lanzador-monitor.gif)
+
+### LOOK: escritorios virtuales y Explorador
+Paso al escritorio 2 desde las marcas del botón PyOS, apertura del Explorador desde el
+lanzador y vuelta al escritorio 1, que conserva el Monitor.
+
+![Escritorios virtuales de LOOK y Explorador de archivos](docs/media/pyos-look-escritorios-explorador.gif)
+
+### PyOS Term: administración
+`uc estado`, `svc list` y `monitor` en la consola de PyOS Term.
+
+![Administración desde PyOS Term](docs/media/pyos-term-administracion.gif)
+
+### PyOS Term: juegos
+`tetris` a pantalla completa en la consola del firmware.
+
+![Tetris en PyOS Term](docs/media/pyos-term-tetris.gif)
+
+### Update Center: actualización A/B
+`uc importar` de un paquete de prueba 2.0.1, firmado con la clave de desarrollo. Le siguen el
+reinicio, el arranque de prueba en el otro conjunto, la confirmación automática y
+`uc historial`.
+
+![Actualización A/B con el Update Center](docs/media/pyos-update-center.gif)
+
 ## Probarlo
 
 ## 📦 Releases
