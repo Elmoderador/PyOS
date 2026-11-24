@@ -29,23 +29,23 @@ Las versiones se etiquetan en Git como `vU.P.S` y cada una tiene su Release con 
 
 ## 2.0.0 — próximamente · Update (▮▮▮▮ ▮▮▮▮ ▮▮▮▮▮▮ ▮▮▮▮▮▮)
 
-> | Idioma | |
-> |---|---|
-> | Castellano (España) | V2.0.0 próximamente |
-> | Castellano (Latinoamérica) | V2.0.0 muy pronto |
-> | English (US) | V2.0.0 coming soon |
-> | English (UK) | V2.0.0 arriving shortly |
-> | Português (Portugal) | V2.0.0 brevemente |
-> | Português (Brasil) | V2.0.0 em breve |
-> | Català | V2.0.0 properament |
-> | Català (Andorra) | V2.0.0 properament |
-> | Valencià | V2.0.0 pròximament |
-> | Euskara | V2.0.0 laster |
-> | Galego | V2.0.0 proximamente |
-> | Deutsch | V2.0.0 demnächst |
-> | Français | V2.0.0 bientôt disponible |
-> | Italiano | V2.0.0 prossimamente |
-> | Andalú | V2.0.0 prósimamente, quillo |
+| Idioma | |
+|---|---|
+| Castellano (España) | V2.0.0 próximamente |
+| Castellano (Latinoamérica) | V2.0.0 muy pronto |
+| English (US) | V2.0.0 coming soon |
+| English (UK) | V2.0.0 arriving shortly |
+| Português (Portugal) | V2.0.0 brevemente |
+| Português (Brasil) | V2.0.0 em breve |
+| Català | V2.0.0 properament |
+| Català (Andorra) | V2.0.0 properament |
+| Valencià | V2.0.0 pròximament |
+| Euskara | V2.0.0 laster |
+| Galego | V2.0.0 proximamente |
+| Deutsch | V2.0.0 demnächst |
+| Français | V2.0.0 bientôt disponible |
+| Italiano | V2.0.0 prossimamente |
+| Andalú | V2.0.0 prósimamente, quillo |
 
 ---
 
