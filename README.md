@@ -1,6 +1,6 @@
 # PyOS — Python Operating System
 
-**Versión 1.0.2** · Licencia [Apache-2.0](LICENSE) · Versionado [U.P.S.](CHANGELOG.md) (Update.Patch.Security)
+**Versión 2.0.0** · Licencia [Apache-2.0](LICENSE) · Versionado [U.P.S.](CHANGELOG.md) (Update.Patch.Security)
 
 Sistema operativo con el kernel escrito **íntegramente en Python** que arranca en una
 máquina virtual **sin Linux ni ningún otro sistema operativo debajo**: solo el
@@ -26,9 +26,6 @@ binario de CPython en un PC: el intérprete donde corre nuestro Python.
 Capturas reales de la pantalla de la VM con la imagen UEFI de PyOS 2.0.0 en QEMU 8.2 + OVMF
 (emulación TCG, sin KVM). No hay nada simulado ni retocado. Solo se han recortado las esperas,
 se han quitado los fotogramas capturados a mitad de un repintado y se ha escalado a 960×600.
-
-> La 2.0.0 todavía está en preparación y no se ha publicado en Releases: la versión publicada
-> es la 1.0.2. Estas capturas muestran el estado actual del desarrollo.
 
 ### Arranque: del firmware UEFI a LOOK
 UEFI Shell, `start.py`, el selector de arranque, el registro del kernel y el escritorio LOOK.
@@ -82,7 +79,7 @@ Descarga la última versión en **[Releases](../../releases)**:
 
 | Hipervisor | Fichero | Firmware |
 |---|---|---|
-| VirtualBox | `pyos-vU.P.S.vdi` | EFI activado |
+| VirtualBox | `pyos-vU.P.S.vdi` | EFI activado, **1 CPU** (con 2 o más, VirtualBox 7.2.4 puede fallar en su propio firmware EFI) |
 | Hyper-V (Gen 2) | `pyos-vU.P.S.vhdx` | Arranque seguro **desactivado** |
 | VMware | `pyos-vU.P.S.vmdk` | UEFI, sin Secure Boot |
 | QEMU | `pyos-vU.P.S.img` | OVMF |
@@ -107,7 +104,7 @@ sudo python -m pyos.tools.mkuefi build/uefi   # construye las imágenes de VM (L
 |---|---|
 | **Temporizador ACPI PM** (3,58 MHz) | Se localiza recorriendo el bus PCI (PIIX4 / ICH9) y se lee por puertos de E/S |
 | **Botón de encendido ACPI** | `PM1_STS.PWRBTN_STS`: apagado ordenado (en VirtualBox: Máquina → Apagado ACPI) |
-| **Teclado PS/2** (i8042) | El firmware lo suelta (`disconnect`) y PyOS lee scancodes del puerto 0x60. Distribuciones `es` y `us`, teclas muertas (á, ü…), Ctrl+Alt+Supr |
+| **Teclado PS/2** (i8042) | El firmware lo suelta (`disconnect`) y PyOS lee scancodes del puerto 0x60. Distribuciones `es`, `latam`, `us`, `gb`, `de`, `fr`, `it`, `pt` y `br`, teclas muertas (á, ü…), Ctrl+Alt+Supr |
 | **UART 16550** (COM1) | Registros 0x3F8–0x3FF, por sondeo |
 | **Bus PCI** | Enumeración del bus 0 (`/proc/pci`, `hwinfo`) |
 | **Intel e1000** (82540EM) | MMIO por BAR0, anillos DMA en RAM física, DHCP. Pila TCP/IP en Python: `docs/NET.md` (en el `.zip` de la Release) |

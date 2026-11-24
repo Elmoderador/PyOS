@@ -8,6 +8,7 @@ Cada versión de seguridad (la **S** de U.P.S.) trae un informe que lanza los mi
 
 | Versión | Fecha | Resultado | Informe |
 |---|---|---|---|
+| **v2.0.0** | 2026-11-23 | Modelo de confianza del Update Center: firmas, arranque A/B, verity y qué puede hacer un servidor malicioso | [security/v2.0.0](security/v2.0.0/) |
 | **v1.0.2** | 2026-11-22 | Cuotas de CPU y memoria, `httpd` concurrente, fuzzer de red con estado | [security/v1.0.2](security/v1.0.2/) |
 | **v1.0.1** | 2026-11-21 | 13 de 13 escenarios de ataque cerrados | [security/v1.0.1](security/v1.0.1/) |
 

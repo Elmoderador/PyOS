@@ -27,30 +27,183 @@ Las versiones se etiquetan en Git como `vU.P.S` y cada una tiene su Release con 
 
 ---
 
-## 2.0.0 — próximamente · Update (▮▮▮▮ ▮▮▮▮ ▮▮▮▮▮▮ ▮▮▮▮▮▮)
+## 2.0.0 — 2026-11-23 · Born from Update Center
 
-| Idioma | |
-|---|---|
-| Castellano (España) | V2.0.0 próximamente |
-| Castellano (Latinoamérica) | V2.0.0 muy pronto |
-| English (US) | V2.0.0 coming soon |
-| English (UK) | V2.0.0 arriving shortly |
-| Português (Portugal) | V2.0.0 brevemente |
-| Português (Brasil) | V2.0.0 em breve |
-| Català | V2.0.0 properament |
-| Català (Andorra) | V2.0.0 properament |
-| Valencià | V2.0.0 pròximament |
-| Euskara | V2.0.0 laster |
-| Galego | V2.0.0 proximamente |
-| Deutsch | V2.0.0 demnächst |
-| Français | V2.0.0 bientôt disponible |
-| Italiano | V2.0.0 prossimamente |
-| Andalú | V2.0.0 prósimamente, quillo |
+Syscalls nuevas a partir de la 80 (ABI 2: `sysinfo()["abi"]` vale 2 y `sysinfo()["since"]` dice desde qué
+ABI existe cada una); las 0–79 no cambian de significado (la 26, `statfs`, acepta ahora una ruta
+opcional).
 
-> - ▮▮▮▮▮▮ se ▮▮▮▮▮▮▮▮ solo. Y si sale mal, ▮▮▮▮▮▮ solo.
-> - Habla 15 idiomas. Bueno, 14. El 15.º es andalú y solo sale aquí.
-> - 551 tests. Ninguno en verde a la primera.
-> - Escribe `turbo`. No servirá de nada, pero escríbelo.
+### ⚠ Cambios incompatibles
+- **Un disco 1.x no arranca con la 2.0.** Disco nuevo + `python3 -m pyos migrate` (copia `/root`
+  y `/etc`; el disco 1.x solo se lee). Ver `docs/INSTALAR_ACTUALIZAR_RECUPERAR.md`.
+- **`/bin`, `/sbin`, `/lib` y `/usr` son de solo lectura** (volumen de sistema verificado):
+  escribir ahí da `EROFS`. Lo del usuario va a `/usr/local` (`pkg` lo hace solo) y las rutas de
+  `/bin`, `/sbin`, `/lib` y `/usr/share` lo encuentran ahí.
+- **`LOOK_API` vale 2.** La API de apps dentro de LOOK no cambia (las de la 1.x funcionan igual)
+  y la 2 añade ventanas de otros procesos. Lo que se rompe es la comprobación que recomendaba
+  `docs/LOOK.md` en la 1.x (`if LOOK_API != 1: raise ...`): cámbiala por `if LOOK_API < 1`.
+- **Capacidades por proceso:** la shell, LOOK y los programas del usuario ya no pueden usar
+  `update.*`, `disk.raw` ni `sys.nice` (bajar la prioridad sigue permitido).
+- LOOK y arcade son parte del sistema: se actualizan con UC y `pkg remove look` lo rechaza.
+
+### Update Center y arranque A/B
+- Arranque en dos conjuntos A/B (kernel + volumen de sistema) con manifiesto firmado
+  (Ed25519); etapa 1 fija y `bootloader.zip` en dos copias en la ESP; registro de arranque,
+  almacén de claves y estado de la etapa 1 por duplicado; 3 intentos para una versión nueva,
+  *watchdog* del kernel y vuelta atrás automática con restauración de `/etc`.
+- Volumen de sistema de solo lectura verificado por bloques (árbol de hashes tipo dm-verity).
+- Almacén de claves con registros firmados: rotación y revocación sin reinstalar.
+- `uc estado | buscar | descargar | instalar | importar | historial | volver`; `uc-lite`
+  (siempre disponible, también sin `ucd`); `ucd` (estado, historial, política automática).
+- **En línea (D3):** cliente de Releases de GitHub con TLS 1.3 en Python puro
+  (`TLS_CHACHA20_POLY1305_SHA256`, X25519, certificados ECDSA P-256/P-384 y RSA), HTTP/1.1 con
+  redirecciones, `chunked` y descargas reanudables; solo instala lo que esté firmado con una
+  clave del sistema. Política `uc.auto` / `uc.tipos`; nunca reinicia por su cuenta.
+- **Sin red:** paquete `.ucb` (`uc importar fichero` o `-` desde la entrada estándar).
+- Herramienta del propietario `pyos/tools/release.py` (claves, assets de la Release, `.ucb`).
+- Entrada «PyOS (versión anterior)» en el selector de arranque.
+
+### Sistema
+- Capacidades por proceso (`cap_get`/`cap_drop`, herencia, capacidades de fichero del sistema,
+  canales reservados). `/proc/<pid>/status` muestra `Caps:`.
+- Paquetes firmados `PYOSPKG 2` (syscall 110) en el repositorio del sistema.
+- `svcd`: salud de los servicios esenciales; un servicio que arranca pero no responde no cuenta
+  como sano (no se confirma una actualización con `ucd` colgado).
+- `eventd`: permisos por tema y historial de avisos en `/var/lib/notify/history`.
+- Criptografía en el kernel (syscall 112, por pasos para no parar el planificador):
+  ChaCha20-Poly1305, X25519, ECDSA P-256/P-384, RSA PKCS#1 v1.5/PSS, SHA-2, HMAC.
+- Con `kdiag=1` en la línea del kernel, `/proc/latency` informa también de la llamada más lenta
+  de cada syscall (`slow_syscalls`) y de la rodaja y la medida de memoria más lentas.
+- Corregido antes de publicar (regresión de la rama, no está en 1.x): un proceso que solo hacía
+  syscalls rápidas no se expropiaba nunca (ver el informe de seguridad).
+
+### Programas
+- **Term 2.0** (`term`): hasta 9 sesiones (Alt+1..9, Alt+N, Alt+X); la shell avisa del estado
+  de UC al entrar.
+- `monitor` (CPU, memoria, procesos, almacenamiento, servicios), `diag` ampliado (integridad
+  completa del sistema, arranque, claves; `-o fichero`), `notify`.
+- **LOOK (Desktop 2.0):** 4 escritorios (Alt+1..4 o las marcas del botón PyOS), ventanas de
+  otros procesos (`/lib/look2.py`), lanzador con búsqueda (Alt+L), Monitor, Diagnóstico,
+  Actualizaciones, centro de avisos, Explorador (pestañas, búsqueda, vista previa), editor con
+  resaltado de Python, interfaz de Paquetes, «Recordar ventanas» en Ajustes.
+- **SDK:** `docs/SDK.md` (tabla de syscalls generada y comprobada), plantillas de programa y de
+  ventana, `python3 -m pyos.tools.sdk nuevo | empaquetar | firmar`.
+
+### Arranque UEFI
+- **Python.efi con parches de PyOS** (`pyos/uefi/patches/`): `edk2.writemem` copiaba desde una
+  dirección equivocada (longitud de 8 bytes escrita en un `int`), y PyOS lo aprovechaba copiando
+  desde la página física 0. En un firmware que protege la página 0, LOOK se quedaba colgado con
+  un fallo de página al arrancar. Ahora la copia rápida usa `writemem` corregido y nunca toca la
+  página 0; sin el parche, el camino lento.
+- LOOK muestra su versión real (2.0.0; ponía 1.0.0).
+- Validación de arranque por hipervisor antes de entregar (`docs/VALIDACION_ARRANQUE.md`,
+  `scripts/validate_boot_qemu.py`, `tests/qa/vbox_validate.ps1`).
+
+### Idiomas
+- **PyOS habla 9 idiomas (14 variantes):** castellano de España (el original) y de Latinoamérica,
+  inglés de EE. UU. y del Reino Unido, portugués de Portugal y de Brasil, catalán (central,
+  valenciano y de Andorra), euskera, gallego, alemán, francés e italiano. Se elige en
+  Ajustes > Idioma o con la orden nueva `idioma <código>` (`idioma lista` los enseña).
+- Todo lo que ve el usuario está traducido: LOOK, sus aplicaciones, la shell, las órdenes, los
+  juegos, el Update Center y los mensajes de `init`. **El registro del kernel sigue en
+  castellano** (es para diagnosticar) y los textos de error del sistema (`strerror`) siguen en
+  inglés, como en Linux.
+- Catálogos en `/usr/share/locale/<código>/<dominio>.cat`; la clave es el texto original
+  (`tr()` / `trn()` en libpy, también para apps de terceros). Las variantes solo guardan lo que
+  cambia respecto a su idioma base. Herramienta `python3 -m pyos.tools.i18n` (candidatos,
+  extraer, comprobar, estado) que comprueba marcadores `%s` en orden, glifos y saltos de línea.
+- Las traducciones no las ha revisado todavía ningún hablante nativo.
+
+### Accesibilidad
+- **Ajustes > Accesibilidad**, en cinco grupos con una explicación por opción:
+  - *Ver mejor:* tamaño de todo al 100/150/200 % (texto con letra Terminus más grande, nítida,
+    no escalada a bloques), puntero grande o muy grande, marca del teclado muy visible.
+  - *Colores:* alto contraste (negro, blanco y amarillo), colores suaves (tema «Calma», sin
+    blanco que deslumbre) y colores para daltonismo (paleta Okabe-Ito: nada depende de
+    distinguir rojo y verde).
+  - *Lectura:* lectura fácil (los mensajes importantes en frases cortas y palabras sencillas),
+    espaciado amplio entre letras y líneas (dislexia) y guía de lectura en Notas, Ayuda e
+    informes.
+  - *Atención:* reducir movimiento, avisos tranquilos (no salen encima: se guardan y la barra
+    dice cuántos hay), avisos que no se van solos y modo concentración (solo la ventana activa).
+  - *Movilidad:* teclas fijas (Ctrl/Alt/Mayús de una en una), teclado lento (retardo, repetición
+    y rebote), velocidad del doble clic y abrir con un solo clic.
+- Todos los diálogos se manejan con el teclado: Tab / Mayús+Tab mueven el foco entre botones e
+  Intro pulsa el que lo tiene. Los botones tienen el ancho de su texto en cualquier idioma.
+- **Aviso de actualización nuevo:** ventana con «Instalar», «Más tarde» y «Qué trae», explicada
+  en frases sencillas (qué trae, que no se pierde nada si falla) y que no se cierra sola.
+- Syscall nueva **113 `kbdopts`** (teclas fijas y teclado lento en el driver PS/2) y
+  `gfx_open(opts)` admite `zoom` y `cursor`. Distribuciones de teclado nuevas: `latam`, `gb`,
+  `de`, `fr`, `it`, `pt`, `br`. Alt+número cambia de escritorio también con distribución
+  española y Mayús+Tab llega a las aplicaciones.
+- Fuentes grandes derivadas de Terminus Font (licencia SIL OFL 1.1 en
+  `licenses/Terminus-Font-OFL-1.1.txt`; no se usa el nombre reservado).
+- Límites, dichos claramente: no hay lector de pantalla (PyOS no tiene audio); el terminal de
+  LOOK no se amplía; las teclas fijas no tienen indicador en pantalla; el 200 % necesita una
+  pantalla de al menos 1600x1000; en QEMU la repetición de teclas la hace también el anfitrión,
+  así que el teclado lento se nota menos que en hardware real.
+
+### Otros
+- LOOK pinta con doble búfer: cada fotograma se compone en memoria y se copia entero a la
+  pantalla, con el cursor ya encima. Se acaba el parpadeo de ver las ventanas a medio pintar.
+- Orden `turbo` (huevo de pascua, en los 9 idiomas; en `help`: «turbo: Baja 1ms»): «activa» el modo turbo, tarda
+  ~1,6 s en ahorrarte 1 ms y reconoce que ese milisegundo no se puede medir.
+- Kit de publicación (`scripts/release/`, `docs/PUBLICAR_2.0.0.md`): construye las imágenes con
+  las claves del propietario en su equipo (Linux o Windows + WSL2), regenera `SHA256SUMS` y
+  verifica sin claves privadas que las imágenes llevan sus claves y que la firma es válida.
+
+### Seguridad
+Informe: `docs/security/v2.0.0/README.md` (modelo de confianza de UC, fuzzers, fallos
+encontrados durante el desarrollo y límites conocidos).
+
+### Fallos que también tiene la 1.0.2 (reproducidos contra `v1.0.2`, corregidos aquí)
+Ninguno se ha llevado a la rama 1.x: decidir si merecen una 1.0.3 es cosa del propietario.
+
+- **Red: inundación de SYN.** Las conexiones semiabiertas no tenían tope (20 000 SYN → 20 000
+  conexiones en el kernel). Ahora: 64 por puerto en escucha (cae la más vieja) y 1024 en total.
+- **Red: tabla ARP y destinos sin resolver** sin tope; ahora 256 y 64.
+- **DNS:** una consulta abandonada por una señal retenía un puerto 6 s, sin límite (un bucle
+  agotaba los 16 384 puertos efímeros de todo el sistema); puerto de origen secuencial
+  (RFC 5452 pide azar); caché sin tope; etiquetas de más de 63 bytes generaban paquetes mal
+  formados.
+- **ping:** las peticiones no tenían dueño. Otro proceso podía leer o pisar la respuesta, y
+  entonces una señal al dueño acababa en un Oops que lo mataba.
+- **Plazos heredados:** tras un `sleep` desde código llamado por el anfitrión, el siguiente
+  `sleep_ms(1000)` dormía 3 s (o se acortaba).
+- **Teclado PS/2:** el Mayús falso (`E0 2A`/`E0 AA`) soltaba el Mayús real; Pausa activaba
+  Ctrl; el bloque numérico no escribía; Bloq Mayús no afectaba a ñ ni a ç.
+- **Subsistema Linux (modo alojado):** `lx_spawn` no tenía tope de procesos del anfitrión;
+  ahora 8 por proceso y 32 en total.
+- **Reloj en UEFI:** el temporizador ACPI PM (24 bits) da la vuelta cada 4,69 s; si una
+  syscall larga no lo leía en ese tiempo, el reloj del kernel se atrasaba 4,69 s por vuelta
+  (medido: 25 s reales contados como 4). Ahora se recuperan contra el RTC del firmware.
+- **Límite de CPU esquivable:** tras una syscall larga solo se cobraban 50 ticks (0,5 s); una
+  compilación de 3,2 s contaba 0 s de CPU. Ahora se cobran todos, y `uptime_ms` sale del reloj
+  (LOOK decía "escritorio listo en 2,1 s" en UEFI; en realidad eran 5,1 s).
+- **Compilar congelaba el sistema** (no se podía expropiar): en QEMU, 64 KiB ~6 s y 256 KiB
+  ~23 s; `exec` aceptaba ficheros de hasta ~4 MiB. Ahora se compila por pasos (abajo), con
+  un tope de 256 KiB por fichero.
+
+### Compilación por pasos
+- El análisis sintáctico se hace por trozos de sentencias completas (también dentro de
+  `class`/`def`) y el árbol es idéntico al de `ast.parse` entero, posiciones incluidas; los
+  ámbitos y la generación de código ceden el control tras cada sentencia. Bytecode idéntico
+  byte a byte al compilador anterior (copia congelada en `tests/ref/compiler_ref.py`).
+- `exec`, `spawn`, `include` y `pycompile` avanzan unos milisegundos por turno y ceden la CPU
+  (`Yield`). Una señal la cancela (`EINTR`); la muerte del proceso la libera; lo que se compila
+  a la vez está acotado (512 KiB de fuente; quien no cabe espera).
+- Nuevo `/proc/latency`: hueco más largo entre sondeos de interrupciones (total y por segundo)
+  y paso de compilación más largo.
+- Medido en QEMU (UEFI): hueco máximo compilando LOOK ~0,1 s (antes ~4,5 s); 180 KiB ~0,3 s
+  (antes ~10 s). Coste: LOOK carga un 10–30 % más despacio.
+
+### Recolector de basura
+- La colección completa (generación 2) ya no cae en mitad del trabajo de un proceso: se hace en
+  reposo, y con carga continua se fuerza espaciada (≤ ~5 % del tiempo). En QEMU, el paso de
+  compilación más largo bajó de 250–300 ms a ~70 ms. `/proc/latency` informa de las colecciones.
+
+### Rendimiento
+- Compilar LOOK en el arranque UEFI: de ~5,8 s a ~4,3 s (−27 %), con salida idéntica byte a byte.
 
 ---
 
