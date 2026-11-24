@@ -47,6 +47,11 @@ Las versiones se etiquetan en Git como `vU.P.S` y cada una tiene su Release con 
 | Italiano | V2.0.0 prossimamente |
 | Andalú | V2.0.0 prósimamente, quillo |
 
+> - ▮▮▮▮▮▮ se ▮▮▮▮▮▮▮▮ solo. Y si sale mal, ▮▮▮▮▮▮ solo.
+> - Habla 15 idiomas. Bueno, 14. El 15.º es andalú y solo sale aquí.
+> - 551 tests. Ninguno en verde a la primera.
+> - Escribe `turbo`. No servirá de nada, pero escríbelo.
+
 ---
 
 ## 1.0.2 — 2026-11-22 · Security (Shield Update II)
