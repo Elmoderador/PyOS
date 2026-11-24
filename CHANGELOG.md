@@ -27,8 +27,8 @@ Las versiones se etiquetan en Git como `vU.P.S` y cada una tiene su Release con 
 
 ---
 
-> **V2.0.0 próximamente**
->
+## 2.0.0 — próximamente · Update (▮▮▮▮ ▮▮▮▮ ▮▮▮▮▮▮ ▮▮▮▮▮▮)
+
 > | Idioma | |
 > |---|---|
 > | Castellano (España) | V2.0.0 próximamente |
