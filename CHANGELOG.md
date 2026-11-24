@@ -27,6 +27,93 @@ Las versiones se etiquetan en Git como `vU.P.S` y cada una tiene su Release con 
 
 ---
 
+## 2.0.1 — 2026-11-24 · Seguridad
+
+Solo arreglos de seguridad (S de U.P.S.): ninguna función nueva para el usuario, ningún cambio de
+syscalls ni de `LOOK_API`. Se actualiza desde la 2.0.0 con el Update Center (`uc buscar` →
+`uc instalar` → reiniciar) o con el paquete `.ucb`.
+
+**Anti-retroceso.** La 2.0.1 sube el índice de anti-retroceso del kernel y del sistema. Una vez
+confirmada (el primer arranque bueno), **`uc volver` ya no puede volver a la 2.0.0**: es a
+propósito, para que nadie pueda devolver la máquina a una versión con estos fallos. Mientras
+la 2.0.1 no esté confirmada, si no arranca bien, la máquina vuelve sola a la 2.0.0 como siempre.
+
+### Update Center: sello de tiempo contra la congelación
+Hasta ahora, un servidor (o una raíz TLS añadida, o `uc.api` cambiado) podía esconder una versión
+nueva y la máquina se quedaba para siempre en la vieja creyéndose al día (límite conocido de la
+2.0.0, «ataque de congelación»).
+
+- **Sello de tiempo firmado `UCTIME 1`** (tipo TUF, formato en `docs/SDK.md`): dice cuál es la
+  última versión de cada canal, con el hash de su manifiesto, y caduca a los 35 días. Lo firma
+  una clave de sello aparte (la parte pública va en el volumen de sistema verificado,
+  `/usr/share/pyos/uc-timestamp.keys`) y se renueva cada mes en la Release `uc-timestamp`.
+- `uc buscar` **se para** si el sello firmado anuncia una versión que el servidor no ofrece, o la
+  ofrece con otro manifiesto: «posible ataque de congelación».
+- Si no se puede confirmar (no hay sello, está caducado, es del futuro o es más viejo que uno ya
+  visto), **avisa y sigue**: nunca instala nada sin firma, igual que antes, y `uc estado` lo
+  enseña como «sin confirmar». Dicho claro: quien controle el servidor todavía puede esconder
+  el sello entero (y entonces solo hay aviso) o servir uno viejo pero sin caducar (congelación
+  de 35 días como mucho). Es la misma garantía que da TUF con su rol de *timestamp*.
+- Si el sello no se renueva en 35 días, todas las máquinas pasan a «sin confirmar».
+- `uc estado` dice si la última versión está **confirmada**, **sin confirmar** o si el servidor
+  **esconde versiones**.
+- La 2.0.0 ignora la Release `uc-timestamp` (no es una versión), así que publicarla no le afecta.
+
+### Red y HTTPS (`/lib/https.py`)
+- **URL:** se rechazan caracteres de control y espacios (antes se podían inyectar cabeceras en la
+  petición), puertos fuera de 1–65535 y hosts con `@`, `\`, `?` o `#`.
+- **Redirecciones:** solo `https://…` o rutas que empiezan por `/` (en el mismo host y puerto).
+  Antes, una relativa rara como `evil.test/x` acababa pidiendo a otro host.
+- **`chunked`:** tamaño de trozo en hexadecimal de hasta 8 cifras, línea de hasta 64 bytes, límite
+  comprobado **antes** de leer y CRLF obligatorio tras cada trozo. Antes, un trozo anunciado de
+  2 GiB se iba acumulando en memoria.
+- **Descargas reanudadas:** solo se acepta `206` si `Content-Range` empieza donde se pidió, o un
+  `200` que reescribe el fichero desde cero. Antes, un `206` de otro trozo dejaba el fichero
+  mezclado y un `200` se añadía al final.
+- Cifras de estado, tamaños y versiones: solo cifras ASCII (`'³00'` hacía caer el cliente con una
+  excepción no controlada).
+- **`Retry-After`:** como mucho 24 horas. Antes, un servidor podía bloquear el Update Center
+  durante años.
+- **DNS** (kernel): solo se aceptan respuestas que vienen del servidor DNS configurado, desde el
+  puerto 53, con una sola pregunta, el bit de respuesta y **la misma pregunta que se hizo**
+  (RFC 5452). Lo demás se descarta sin cerrar la consulta.
+
+### TLS y certificados
+- TLS 1.3: los mensajes del servidor tienen que llegar en orden (EncryptedExtensions →
+  Certificate → CertificateVerify → Finished), cada uno una vez.
+- Un mensaje después del handshake que anuncia más del máximo se rechaza al ver la longitud
+  (antes esperaba a juntar hasta 16 MiB en memoria).
+- Un handshake mal formado da `TLSError`, no una excepción cualquiera.
+- X.509: una extensión **crítica** desconocida (p. ej. `nameConstraints`) hace rechazar el
+  certificado, como pide RFC 5280. Antes, una CA limitada a ciertos dominios se aceptaba como CA
+  sin límites.
+
+### Formatos
+- `json`: UTF-8 no válido da `JsonError` (antes, `UnicodeDecodeError` sin controlar); el tope de
+  tamaño se mide en bytes.
+- `.ucb`: como mucho 64 registros de claves, y una parte más grande de lo que queda del tamaño
+  declarado se rechaza. Antes leía miles de registros antes de fallar.
+- Releases: como mucho 32 registros de claves por Release, en línea y en `.ucb`.
+- `pkg`: cabeceras con bytes no válidos dan «paquete no válido»; el tamaño solo admite cifras
+  ASCII (aceptaba `+1`).
+
+### Pruebas
+- Banco de ataques `tests/secbench201.py`: los **mismos 14 ataques** contra el código de la 2.0.0
+  y de la 2.0.1. En la 2.0.0 funcionan los 14; en la 2.0.1 se bloquean los 14.
+- Fuzzer con estado de las syscalls `update_*` (con la capacidad `update.stage`): el conjunto A
+  no cambia nunca por una secuencia hostil.
+- Pruebas nuevas: `test_uctime` (sello, de extremo a extremo con un GitHub falso),
+  `test_https_hardening`, `test_tls_hardening`, `test_x509_hardening`, DNS suplantado.
+- Informe: `docs/security/v2.0.1/README.md`.
+
+### Kit de publicación
+- Clave nueva de sello de tiempo: `release.py keygen-timestamp` y `release.py timestamp`.
+- `construir_release.py` construye imágenes y assets del Update Center desde la **misma**
+  compilación, con un solo `SHA256SUMS`; `verificar_release.py --con-uc --sello` comprueba que el
+  manifiesto de las imágenes es el de los assets y que el sello es válido.
+
+---
+
 ## 2.0.0 — 2026-11-23 · Born from Update Center
 
 Syscalls nuevas a partir de la 80 (ABI 2: `sysinfo()["abi"]` vale 2 y `sysinfo()["since"]` dice desde qué

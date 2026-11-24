@@ -1,0 +1,90 @@
+{
+ "arbol": "PyOS-v2.0.0.zip publicado (SHA-256 99c5acb1…)",
+ "version": "2.0.0",
+ "ataques": {
+  "congelacion": {
+   "resultado": "funciona",
+   "detalle": "no hay sello de tiempo: la lista sin la versión nueva se cree",
+   "ms": 0.0,
+   "titulo": "UC: el servidor esconde la versión nueva (congelación)"
+  },
+  "chunked_memoria": {
+   "resultado": "funciona",
+   "detalle": "el cliente acumuló 2560 KiB de un trozo de 2 GiB",
+   "ms": 16.3,
+   "titulo": "HTTPS: trozo chunked de 2 GiB acumulado en memoria"
+  },
+  "inyeccion_cabeceras": {
+   "resultado": "funciona",
+   "detalle": "petición enviada con la cabecera inyectada",
+   "ms": 2.3,
+   "titulo": "HTTPS: inyección de cabeceras por la URL"
+  },
+  "redireccion_rara": {
+   "resultado": "funciona",
+   "detalle": "segunda petición a b'api.testevil.test'",
+   "ms": 2.1,
+   "titulo": "HTTPS: redirección relativa a otro host"
+  },
+  "range_otro_trozo": {
+   "resultado": "funciona",
+   "detalle": "el fichero quedó b'abcXYZdef'",
+   "ms": 2.1,
+   "titulo": "HTTPS: al reanudar, 206 de otro trozo"
+  },
+  "range_200_ensucia": {
+   "resultado": "funciona",
+   "detalle": "el fichero llegó a 9 bytes (esperado 6) antes de empezar de nuevo",
+   "ms": 2.1,
+   "titulo": "HTTPS: al reanudar, 200 completo añadido al fichero"
+  },
+  "digitos_unicode": {
+   "resultado": "funciona",
+   "detalle": "excepción no esperada: ValueError: invalid literal for int() with base 10: '³00'",
+   "ms": 2.1,
+   "titulo": "HTTPS: estado con cifras no ASCII ('³00')"
+  },
+  "retry_after": {
+   "resultado": "funciona",
+   "detalle": "Update Center bloqueado 1157407 días",
+   "ms": 7.0,
+   "titulo": "UC: Retry-After de años"
+  },
+  "nameconstraints": {
+   "resultado": "funciona",
+   "detalle": "CA con nameConstraints críticas aceptada como CA sin límites",
+   "ms": 53.1,
+   "titulo": "X.509: CA con nameConstraints críticas"
+  },
+  "tls_16mb": {
+   "resultado": "funciona",
+   "detalle": "espera a juntar 16 MiB en memoria",
+   "ms": 4.5,
+   "titulo": "TLS: mensaje post-handshake de 16 MiB"
+  },
+  "json_utf8": {
+   "resultado": "funciona",
+   "detalle": "excepción no esperada: UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 7: invalid start byte",
+   "ms": 2.5,
+   "titulo": "JSON: UTF-8 no válido"
+  },
+  "dns_suplantado": {
+   "resultado": "funciona",
+   "detalle": "respuesta de 10.0.2.99 con otra pregunta: aceptada",
+   "ms": 12.6,
+   "titulo": "DNS: respuesta de otra IP y con otra pregunta"
+  },
+  "ucb_registros": {
+   "resultado": "funciona",
+   "detalle": "leyó los 2000 registros antes de fallar por otra cosa (se esperaba el manifiesto y llegó 'None')",
+   "ms": 4.5,
+   "titulo": "UCB: 2000 registros de claves"
+  },
+  "pkg_cabecera": {
+   "resultado": "funciona",
+   "detalle": "aceptó un tamaño '+1'",
+   "ms": 4.6,
+   "titulo": "pkg: tamaño '+1' en la cabecera"
+  }
+ }
+}

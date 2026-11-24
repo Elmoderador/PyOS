@@ -1,0 +1,57 @@
+{
+ "que": "PRUEBA_AB en QEMU 8.2 + OVMF (TCG, sin KVM) con artefactos del kit real y claves desechables: imagen 2.0.0 del kit de la 2.0.0 y pyos-update-v2.0.1.ucb de construir_release.py de la 2.0.1 (--cambios kernel=S,system=S,bootloader=none --antirretroceso kernel=2,system=2 --desde 2.0.0)",
+ "pasos_segundos": [
+  [
+   0,
+   "arranque 2.0.0"
+  ],
+  [
+   56,
+   "traer el .ucb real con nc"
+  ],
+  [
+   274,
+   "uc importar"
+  ],
+  [
+   287,
+   "arranque de prueba 1: apagado a lo bruto"
+  ],
+  [
+   297,
+   "arranque de prueba 2: apagado a lo bruto"
+  ],
+  [
+   320,
+   "arranque de prueba 3: apagado a lo bruto"
+  ],
+  [
+   343,
+   "cuarto arranque: tiene que volver solo a la 2.0.0"
+  ],
+  [
+   374,
+   "actualización de verdad"
+  ],
+  [
+   463,
+   "reinicio tras uc volver negado: sigue la 2.0.1"
+  ],
+  [
+   484,
+   "fin"
+  ]
+ ],
+ "comprobaciones": {
+  "parte_de_2.0.0": true,
+  "nc": true,
+  "importado_en_B": true,
+  "3_arranques_de_prueba": true,
+  "vuelta_atras_sola": true,
+  "confirmada": true,
+  "estado_2.0.1": true,
+  "volver_negado": true,
+  "sigue_2.0.1_tras_reinicio": true
+ },
+ "total_s": 484
+}

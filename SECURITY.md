@@ -20,7 +20,8 @@ PyOS es un proyecto experimental y educativo. Hay límites conocidos que **no** 
 vulnerabilidades nuevas porque están documentados en `docs/LIMITATIONS.md` (en el `.zip` de cada Release):
 no hay usuarios (todo se ejecuta como un único usuario, con las capacidades de usuario de la
 2.0), y TLS solo existe en el cliente de actualizaciones (`/lib/tls.py`), con los límites de
-[docs/security/v2.0.0](docs/security/v2.0.0/README.md) §6.
+[docs/security/v2.0.0](docs/security/v2.0.0/README.md) §6 y
+[docs/security/v2.0.1](docs/security/v2.0.1/README.md).
 
 Tampoco lo son, de momento, estos límites conocidos:
 
@@ -39,10 +40,12 @@ Tampoco lo son, de momento, estos límites conocidos:
 - **Las aplicaciones de LOOK** (`/usr/share/look/apps`) se ejecutan dentro del proceso de LOOK,
   con sus mismos permisos: instala solo las que conozcas.
 
-- **Update Center (2.0):** lo que decide si algo se instala es la firma del manifiesto. Que un
-  servidor (o `uc.api` cambiado, o una raíz añadida en `/etc/pyos/roots`) pueda negar o retrasar
-  actualizaciones, o servir una lista vieja, es un límite conocido (no hay sello de tiempo tipo
-  TUF). La criptografía es Python puro y no es de tiempo constante.
+- **Update Center (2.0):** lo que decide si algo se instala es la firma del manifiesto. Desde la
+  2.0.1, un sello de tiempo firmado (tipo TUF) detecta que un servidor esconda una versión nueva
+  si sirve el sello. Sigue siendo un límite conocido que un servidor (o `uc.api` cambiado, o una
+  raíz añadida en `/etc/pyos/roots`) pueda negar las actualizaciones del todo, esconder también
+  el sello (solo hay un aviso, «sin confirmar») o servir un sello viejo sin caducar (35 días como
+  mucho). La criptografía es Python puro y no es de tiempo constante.
 
 Sí son vulnerabilidades, por ejemplo: que un programa de usuario escape del aislamiento de la
 PVM y ejecute Python del anfitrión, que lea o escriba memoria del kernel, que un paquete de
