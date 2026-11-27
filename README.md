@@ -21,10 +21,10 @@ UEFI Shell son binarios de terceros compilados **sin modificar** desde las fuent
 oficiales de TianoCore (`edk2`, `edk2-libc`). Tienen el mismo papel que el
 binario de CPython en un PC: el intérprete donde corre nuestro Python.
 
-## PyOS 2.0.0 en marcha
+## PyOS 2.0.0 en funcionamiento
 
 Capturas reales de la pantalla de la VM con la imagen UEFI de PyOS 2.0.0 en QEMU 8.2 + OVMF
-(emulación TCG, sin KVM). No hay nada simulado ni retocado. Solo se han recortado las esperas,
+(emulación TCG, sin KVM). No hay nada falsificado ni retocado. Solo se han recortado las esperas,
 se han quitado los fotogramas capturados a mitad de un repintado y se ha escalado a 960×600.
 
 ### Arranque: del firmware UEFI a LOOK
