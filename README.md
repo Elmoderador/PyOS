@@ -157,6 +157,7 @@ Limitations, design decisions and alternatives: `docs/LIMITATIONS.md` (included 
 
 ## Project
 
+- [README.es.md](README.es.md): spanish version of the main README
 - [CHANGELOG.md](CHANGELOG.md): changes in each version and the U.P.S. versioning policy.
 - `CONTRIBUTING.md` (included in the Release `.zip`): how to contribute (and the golden rule: everything in Python).
 - [SECURITY.md](SECURITY.md): how to report a vulnerability.
